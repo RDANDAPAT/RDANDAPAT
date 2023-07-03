@@ -22,7 +22,7 @@ class Contact_manager {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'contacts';
         // Plugin activation hook
-        register_activation_hook(__FILE__, array($this, 'plugin_activation'));
+        register_activation_hook(__FILE__, array($this, 'wp_contact_manager_create_table'));
         // Enqueue scripts and styles
         // add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_plugin_scripts'));
@@ -81,7 +81,7 @@ class Contact_manager {
         $last_name = sanitize_text_field($_POST['last_name']);
         $phone_number = sanitize_text_field($_POST['phone_number']);
         $address = sanitize_text_field($_POST['address']);
-
+        // echo $email;die;
         if (empty($email) || empty($first_name) || empty($last_name) || empty($phone_number)) {
             wp_send_json_error('All fields are mandatory.');
         }
@@ -136,6 +136,5 @@ class Contact_manager {
 // Initialize the plugin
 new Contact_manager();
 
-?>
 
 
