@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
 
         // Perform AJAX form submission
         $.ajax({
-            url: wpContactManagerAjax.ajaxurl, // Use wpContactManagerAjax.ajaxurl instead of ajaxurl
+            url: contactManagerAjax.ajaxurl, // Use wpContactManagerAjax.ajaxurl instead of ajaxurl
             type: 'POST',
             data: {
                 action: 'wp_contact_manager_submit_form',

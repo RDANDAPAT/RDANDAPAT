@@ -31,8 +31,8 @@ class Contact_manager {
         add_shortcode('contact_form', array($this, 'wp_contact_manager_form_markup'));
 
         // AJAX form submission handler
-        add_action('wp_ajax_submit_contact_form', array($this, 'wp_contact_manager_submit_form'));
-        add_action('wp_ajax_nopriv_submit_contact_form', array($this, 'wp_contact_manager_submit_form'));
+        add_action('wp_ajax_wp_contact_manager_submit_form', array($this, 'wp_contact_manager_submit_form'));
+        add_action('wp_ajax_nopriv_wp_contact_manager_submit_form', array($this, 'wp_contact_manager_submit_form'));
 
         // Admin menu and page for contact list
         add_action('admin_menu', array($this, 'add_admin_menu'));
@@ -63,8 +63,8 @@ class Contact_manager {
         wp_enqueue_script('wp-contact-manager-scripts', plugins_url('js/scripts.js', __FILE__), array('jquery'), '1.0', true);
 
         // Localize the script and pass the ajaxurl value
-        wp_localize_script('wp-contact-manager-scripts', 'wpContactManagerAjax', array(
-            'ajaxurl' => admin_url('admin-ajax.php'),
+        wp_localize_script('wp-contact-manager-scripts', 'contactManagerAjax', array(
+            'ajaxurl' => admin_url('admin-ajax.php')
         ));
     }
     // Shortcode callback for display the contact form
@@ -81,9 +81,11 @@ class Contact_manager {
         $last_name = sanitize_text_field($_POST['last_name']);
         $phone_number = sanitize_text_field($_POST['phone_number']);
         $address = sanitize_text_field($_POST['address']);
-        // echo $email;die;
+        
         if (empty($email) || empty($first_name) || empty($last_name) || empty($phone_number)) {
-            wp_send_json_error('All fields are mandatory.');
+            wp_send_json_error(array(
+                'message' => 'All fields are mandatory.'
+            ));
         }
 
         // Insert the contact into the database
@@ -98,7 +100,9 @@ class Contact_manager {
             'address' => $address,
         ));
 
-        wp_send_json_success('Contact submitted successfully.');
+        wp_send_json_success(array(
+            'message' => 'Contact submitted successfully.'
+        ));
     }
     // Create an admin page to view contact details
     public function add_admin_menu() {

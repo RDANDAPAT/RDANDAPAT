@@ -28,9 +28,13 @@ header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 header( 'X-Robots-Tag: noindex' );
 
 // Require a valid action parameter.
-if ( empty( $_REQUEST['action'] ) || ! is_scalar( $_REQUEST['action'] ) ) {
-	wp_die( '0', 400 );
+// if ( empty( $_REQUEST['action'] ) || ! is_scalar( $_REQUEST['action'] ) ) {
+// 	wp_die( '0', 400 );
+// }
+if ( empty( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) ) {
+    wp_send_json_error( 'Invalid action parameter.', 400 );
 }
+
 
 /** Load WordPress Administration APIs */
 require_once ABSPATH . 'wp-admin/includes/admin.php';

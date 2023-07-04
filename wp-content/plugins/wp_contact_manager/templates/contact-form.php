@@ -1,4 +1,4 @@
-<form id="wp-contact-manager-form" method="post">
+<form id="wp-contact-manager-form" method="po">
         <div>
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
